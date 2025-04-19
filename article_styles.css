@@ -74,46 +74,63 @@ hr{opacity:0.2;}
 
 
 
-    @media only screen and (max-width: 829px) { /* iPhone & smaller screens */
+@media only screen and (max-width: 829px) {
 
-        #article-container {
-            width: 95vw;  /* make it responsive */
-            margin-top: 0;  /* remove negative margin */
-            padding: 10px 15px;
-        }
-    
-        .navigation-buttons {
-            flex-direction: column; 
-            margin: 2rem 0;
-            gap: 1rem;
-        }
-    
-        .navigation-button {
-            font-size: 1rem;
-            padding: 10px;
-            width: 100%;
-        }
-    
-        h1 {
-            font-size: 1.1rem;
-        }
-    
-        h2 {
-            font-size: 0.9rem;
-        }
-    
-        #article-info {
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
-    
-        body, html {
-            padding: 1rem;
-            overflow-x: hidden;
-        }
+    #article-container {
+        width: 95vw;
+        margin-top: 0;
+        padding: 10px 15px;
+       
     }
-    
+
+    h1 {
+        font-size: 1.03rem;
+        margin-bottom:-0.2rem;
+        font-style: italic !important;
+        color: #808080
+    }
+
+    h2 {
+        font-size: 0.9rem;
+    }
+
+    #article-info {
+        font-size: 0.9rem;
+        margin-top: 0.8rem;
+    }
+
+    body, html {
+        padding: 1rem;
+        overflow-x: hidden !important;
+        margin-top: -1.6rem;;
+    }
+   
+
+
+    .navigation-buttons {
+        flex-direction: row;
+        justify-content: space-around;
+        margin: 32rem 0 -0.1rem -8.45rem; /* top margin only */
+        padding: 0.7rem;
+        position: fixed;
+        width: 40.98rem;
+        z-index:9999 !important;
+        opacity:0.35;
+
+    }
+
+    .navigation-button {
+        font-size: 1.4rem;
+        padding: 18px 44px;
+        width: auto;
+        border-radius: 5px;
+    }
+
+
+
+
 }
+
 
 
     @media only screen and (max-width: 1379px){   /* ipad media below */

@@ -60,3 +60,27 @@ li { margin: 0.2rem 0; cursor: pointer; }
     .nested { display: none; margin-left: 1.25rem; border-left: 2px solid #e0e0e0; padding-left: 0.75rem; } 
     li.collapsible.open > .nested { display: block; } .link { color: #2c3e50; text-decoration: none; } 
     .link:hover { text-decoration: underline; }
+
+
+
+
+    @media only screen and (max-width: 829px) {
+
+    body, html {
+        padding: 1rem;
+        overflow-x: hidden;
+        font-size: 0.92rem;
+    }
+
+    h1{font-size: 1.1rem; margin-top: -0.5rem;; margin-bottom: 0.5rem;}
+
+
+  
+    #content-wrapper {
+        width: 90vw;
+        margin-top: 0;
+        padding: 10px 15px;
+        
+    }
+
+}
