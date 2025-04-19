@@ -49,7 +49,8 @@
       try {
         const response = await fetch(path);
         const data = await response.json();
-  
+        document.title = `Article ${data.number}`;
+
         const container = document.getElementById('article-container');
         
         // Start with the basic article structure
@@ -82,7 +83,7 @@
         container.innerHTML = articleContent;
   
       } catch (err) {
-        document.getElementById('article-container').textContent = 'Article not found.';
+        document.getElementById('article-container').textContent = 'N/A';
       }
     }
   
