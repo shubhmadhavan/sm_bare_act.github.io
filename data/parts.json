@@ -1,0 +1,119 @@
+[
+  {
+    "part": "Preamble",
+    "title": "",
+    "chapters": [],
+    "headings": [],
+    "articles": [
+      { "id": "Preamble", "title": "" }]
+  },
+  {
+    "part": "Part I",
+    "title": "The Union and its Territory",
+    "chapters": [],
+    "headings": [],
+    "articles": [
+      { "id": "1", "title": "Name and territory of the Union." },
+      { "id": "2", "title": "Admission or establishment of new States." },
+      { "id": "2A", "title": "(Omitted)" },
+      { "id": "3", "title": "Formation of new States and alteration of areas." },
+      { "id": "4", "title": "Laws made under articles 2 and 3..." }
+    ]
+  },
+  {
+    "part": "Part II",
+    "title": "Citizenship",
+    "chapters": [],
+    "headings": [],
+    "articles": [
+      { "id": "5", "title": "Citizenship at the commencement of the Constitution." },
+      { "id": "6", "title": "Rights of citizenship of certain persons who have migrated to India from Pakistan." },
+      { "id": "7", "title": "Rights of citizenship of certain migrants to Pakistan." },
+      { "id": "8", "title": "Rights of citizenship of certain persons of Indian origin residing outside India." },
+      { "id": "9", "title": "Persons voluntarily acquiring citizenship of a foreign State not to be citizens." },
+      { "id": "10", "title": "Continuance of the rights of citizenship." },
+      { "id": "11", "title": "Parliament to regulate the right of citizenship by law." }
+    ]
+  },
+  {
+    "part": "Part III",
+    "title": "Fundamental Rights",
+    "chapters": [
+      {
+        "chapter": "General",
+        "headings": [],
+        "articles":  [
+          { "id": "12", "title": "Definition." },
+          { "id": "13", "title": "Laws inconsistent with or in derogation of the fundamental rights." }
+        ]
+      },
+      {
+        "chapter": "Right to Equality",
+        "headings": [],
+        "articles":  [
+          { "id": "14", "title": "Equality before law." },
+          { "id": "15", "title": "Prohibition of discrimination on grounds of religion, race, caste, sex or place of birth." },
+          { "id": "16", "title": "Equality of opportunity in matters of public employment." },
+          { "id": "17", "title": "Abolition of Untouchability." },
+          { "id": "18", "title": "Abolition of titles." }
+        ]
+      },
+      {
+        "chapter": "Right to Freedom",
+        "headings": [],
+        "articles": ["19", "20", "21", "21A", "22"]
+      },
+      {
+        "chapter": "Right against Exploitation",
+        "headings": [],
+        "articles": ["23", "24"]
+      },
+      {
+        "chapter": "Right to Freedom of Religion",
+        "headings": [],
+        "articles": ["25", "26", "27", "28"]
+      },
+      {
+        "chapter": "Cultural and Educational Rights",
+        "headings": [],
+        "articles": ["29", "30", "31 (Omitted)"]
+      },
+      {
+        "chapter": "Saving of Certain Laws",
+        "headings": [],
+        "articles": ["31A", "31B", "31C", "31D (Omitted)"]
+      },
+      {
+        "chapter": "Right to Constitutional Remedies",
+        "headings": [],
+        "articles": ["32", "32A (Omitted)", "33", "34", "35"]
+      }
+    ]
+  },
+  {
+    "part": "Part IV",
+    "title": "Directive Principles of State Policy",
+    "chapters": [],
+    "headings": [],
+    "articles": ["36", "37", "38", "39", "39A", "40", "41", "42", "43", "43A", "43B","44", "45", "46", "47","48","48A","50","51"]
+  },
+  {
+    "part": "Part V",
+    "title": "The Union",
+    "chapters": [
+      {
+        "chapter": "Chapter I. The Executive",
+        "headings": [
+          {
+            "heading": "The President",
+            "articles": ["52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73"]
+          },
+          {
+            "heading": "Council of Ministers",
+            "articles": ["74", "75"]
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,277 @@
+<!-- article.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Article</title>
+  <style>
+    body { font-family: sans-serif; padding: 1rem; }
+    .section { margin-bottom: 2rem; }
+    h2 { margin-top: 1rem; }
+
+
+
+    #article-container {
+  background-color:  rgba(255, 255, 255, 1);
+  padding: 5px;
+  width: 800px;
+z-index: 99999 !important;
+margin-top: -22rem;
+padding-left:20px;
+padding-right:20px;
+padding-top: 2px;
+}
+
+    .navigation-buttons {
+      display: flex; justify-content: space-between; margin: 10rem -4.2rem;
+    }
+
+    .navigation-button {
+      font-size: 1.2rem;
+      padding: 8px 16px;
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      opacity: 1;
+      
+      transition: opacity 0.3s;
+
+    }
+
+    .navigation-button.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  
+
+   
+  html{   display: grid;
+    place-items: center;}
+
+  body {  
+   font-family: sans-serif; 
+   background-color: #f4f5f7; margin: 0; padding: 2rem;}
+
+
+h1 { font:unset;   font-size: 1.25rem; font-style: unset !important; text-align: left; margin-bottom: 1.5rem; color: #2c3e50; } 
+
+h2 {font:unset; font-size: 0.96rem; font-style:italic; color:rgba(80,80,80,0.66);}
+ 
+.section-summary , .section-amendments {color:rgba(80,80,80,0.5);}
+
+sup{
+  font-size: 0.6rem; 
+  vertical-align: super;
+  color:rgba(80,80,80,0.5);
+}
+
+.back2index{font-size: 1rem; opacity:0.4;}
+
+
+
+#article-info{
+  padding: 0.5rem;  font-size: 0.95rem; color: rgba(75, 75, 75,0.7); margin-top: -1.20rem; border-bottom: 1px solid #ccc; 
+}
+
+hr{opacity:0.2;}
+ </style>
+
+</head>
+
+<div id="article-info" >
+
+</div>
+
+
+<body>
+
+  <div class="navigation-buttons">
+    <button class="navigation-button" id="prev-article">⬅</button>
+    <button class="navigation-button" id="next-article">⮕</button>
+  </div>
+
+  
+  <div id="article-container">Loading...
+
+
+  </div>
+
+
+
+  <div class="section">
+    <a href="index.html" class="back2index">← Back to Index</a>
+  </div>
+
+  <script>
+    function getParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+  
+    async function loadArticle() {
+      const part = getParam('part');
+      const article = getParam('article');
+      const path = `./data/${part}/${article}.json`;
+  
+      try {
+        const response = await fetch(path);
+        const data = await response.json();
+  
+        const container = document.getElementById('article-container');
+        
+        // Start with the basic article structure
+        let articleContent = `
+          <div class="section"><h1>Article ${data.number}: ${data.title}</h1><p>${data.text}</p></div><hr>
+        `;
+        
+        
+        // Only add summary if it's not empty
+        if (data.summary) {
+          articleContent += `<div class="section-summary"><h2>Notes:</h2><p>${data.summary}</p></div>`;
+        }
+  
+        // Filter valid amendments
+        const validAmendments = (data.amendments || []).filter(
+          a => a.year.trim() !== '' || a.description.trim() !== ''
+        );
+
+        // Only add amendments if there are valid ones
+        if (validAmendments.length > 0) {
+          articleContent += `
+            <div class="section-amendments">
+              <h2>Major Amendments</h2>
+              <ul>${validAmendments.map(a => `<li>${a.year}: ${a.description}</li>`).join('')}</ul>
+            </div>
+          `;
+        }
+  
+        // Insert the content into the container
+        container.innerHTML = articleContent;
+  
+      } catch (err) {
+        document.getElementById('article-container').textContent = 'Article not found.';
+      }
+    }
+  
+    loadArticle();
+  </script>
+  
+ 
+
+
+
+
+
+
+
+
+
+ <script>
+  async function loadPartsData() {
+    const response = await fetch('./data/parts.json');
+    return await response.json();
+  }
+
+  function getUrlParams() {
+    const url = new URL(window.location.href);
+    return {
+      part: decodeURIComponent(url.searchParams.get("part")),
+      article: decodeURIComponent(url.searchParams.get("article"))
+    };
+  }
+
+  function flattenArticles(parts) {
+    const allArticles = [];
+
+    parts.forEach(part => {
+      const partName = part.part;
+
+      // Direct articles in part
+      if (part.articles?.length) {
+        part.articles.forEach(article => {
+          allArticles.push({ part: partName, id: article.id });
+        });
+      }
+
+      // Chapters and headings
+      part.chapters?.forEach(chap => {
+        chap.articles?.forEach(article => {
+          allArticles.push({ part: partName, id: article.id });
+        });
+
+        chap.headings?.forEach(heading => {
+          heading.articles?.forEach(article => {
+            allArticles.push({ part: partName, id: article.id });
+          });
+        });
+      });
+
+      // Direct headings in part (if any)
+      part.headings?.forEach(heading => {
+        heading.articles?.forEach(article => {
+          allArticles.push({ part: partName, id: article.id });
+        });
+      });
+    });
+
+    return allArticles;
+  }
+
+  function goToArticle(part, article) {
+    const partSlug = encodeURIComponent(part);
+    const articleSlug = encodeURIComponent(article);
+    window.location.href = `article.html?part=${partSlug}&article=${articleSlug}`;
+  }
+
+  async function setupNavigation() {
+    const parts = await loadPartsData();
+    const flatArticles = flattenArticles(parts);
+    const { part, article } = getUrlParams();
+
+    const currentIndex = flatArticles.findIndex(a => a.part === part && a.id === article);
+
+    if (currentIndex > 0) {
+      document.getElementById('prev-article').onclick = () => {
+        const prev = flatArticles[currentIndex - 1];
+        goToArticle(prev.part, prev.id);
+      };
+    } else {
+      document.getElementById('prev-article').disabled = true;
+    }
+
+    if (currentIndex < flatArticles.length - 1) {
+      document.getElementById('next-article').onclick = () => {
+        const next = flatArticles[currentIndex + 1];
+        goToArticle(next.part, next.id);
+      };
+    } else {
+      document.getElementById('next-article').disabled = true;
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', setupNavigation);
+</script>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const part = params.get("part");
+  const article = params.get("article");
+
+  if (part && article) {
+    const infoDiv = document.getElementById("article-info");
+    const displayText = /^\d/.test(article)
+      ? `Article ${article}`
+      : article;
+    infoDiv.textContent = `${decodeURIComponent(part)} > ${displayText}`;
+  }
+</script>
+
+
+  
+
+
+
+</body>
+</html>

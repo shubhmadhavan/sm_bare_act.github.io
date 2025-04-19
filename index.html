@@ -1,0 +1,293 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Constitution of India</title>
+  <style>
+    body { font-family: sans-serif; padding: 1rem; }
+    ul { list-style: none; padding-left: 1rem; }
+    li { margin: 0.2rem 0; cursor: pointer; }
+    .nested { display: none; margin-left: 1rem; }
+    .open > .nested { display: block; }
+    .link { color: blue; text-decoration: underline; cursor: pointer; }
+
+  </style>
+</head>
+<body>
+  <h1>THE CONSTITUTION OF INDIA</h1>
+
+  <div id="content-wrapper">
+  <ul id="parts-list"></ul>
+
+
+
+</div>
+
+<div class="right-align-container">
+<input type="checkbox" id="hide-titles" onclick="toggleArticleTitles()">
+<label for="hide-titles">Hide Article Titles</label>
+</div>  
+
+<script>
+  function saveItemState(type, id, isOpen) {
+    localStorage.setItem(`${type}_${id}`, isOpen.toString());
+  }
+
+  function isItemOpen(type, id) {
+    const state = localStorage.getItem(`${type}_${id}`);
+    return state === 'true';
+  }
+
+  function addClickEventToItem(item, type, id) {
+    const label = item.querySelector('.toggle-label');
+    if (!label) return;
+
+    label.addEventListener('click', function (e) {
+      e.stopPropagation();
+      item.classList.toggle('open');
+      saveItemState(type, id, item.classList.contains('open'));
+    });
+  }
+
+  function renderItems(parts) {
+    const partsList = document.getElementById('parts-list');
+    parts.forEach(part => {
+      const li = document.createElement('li');
+      li.classList.add('part');
+
+      const labelSpan = document.createElement('span');
+      labelSpan.classList.add('toggle-label');
+      labelSpan.textContent = part.title ? `${part.part} - ${part.title}` : `${part.part}`;
+      li.appendChild(labelSpan);
+
+      const partId = `${part.part}-${part.title || ''}`;
+      if (isItemOpen('part', partId)) li.classList.add('open');
+      addClickEventToItem(li, 'part', partId);
+
+      const nested = document.createElement('ul');
+      nested.classList.add('nested');
+
+      if (part.chapters.length > 0) {
+        part.chapters.forEach(chapter => {
+          const chapLi = document.createElement('li');
+          chapLi.classList.add('chapter');
+
+          const chapLabel = document.createElement('span');
+          chapLabel.classList.add('toggle-label');
+          chapLabel.textContent = chapter.chapter;
+          chapLi.appendChild(chapLabel);
+
+          const chapterId = `${part.part}-${chapter.chapter}`;
+          if (isItemOpen('chapter', chapterId)) chapLi.classList.add('open');
+          addClickEventToItem(chapLi, 'chapter', chapterId);
+
+          const chapNested = document.createElement('ul');
+          chapNested.classList.add('nested');
+
+          if (chapter.headings?.length > 0) {
+            chapter.headings.forEach(heading => {
+              const headLi = document.createElement('li');
+              headLi.classList.add('heading');
+
+              const headLabel = document.createElement('span');
+              headLabel.classList.add('toggle-label');
+              headLabel.textContent = heading.heading;
+              headLi.appendChild(headLabel);
+
+              const headingId = `${part.part}-${chapter.chapter}-${heading.heading}`;
+              if (isItemOpen('heading', headingId)) headLi.classList.add('open');
+              addClickEventToItem(headLi, 'heading', headingId);
+
+              const headNested = document.createElement('ul');
+              heading.articles.forEach(article => {
+                const artLi = document.createElement('li');
+                artLi.classList.add('article');
+
+                const label = /^\d/.test(article.id) ? `Article ${article.id}` : article.id;
+                const display = article.title ? `${label}: ${article.title}` : label;
+
+                const link = document.createElement('span');
+                link.classList.add('link');
+                link.textContent = display;
+                link.onclick = () => goToArticle(part.part, article.id);
+
+                artLi.appendChild(link);
+                headNested.appendChild(artLi);
+              });
+
+              headLi.appendChild(headNested);
+              chapNested.appendChild(headLi);
+            });
+          } else {
+            chapter.articles.forEach(article => {
+              const artLi = document.createElement('li');
+              artLi.classList.add('article');
+
+              const label = /^\d/.test(article.id) ? `Article ${article.id}` : article.id;
+              const display = article.title ? `${label}: ${article.title}` : label;
+
+              const link = document.createElement('span');
+              link.classList.add('link');
+              link.textContent = display;
+              link.onclick = () => goToArticle(part.part, article.id);
+
+              artLi.appendChild(link);
+              chapNested.appendChild(artLi);
+            });
+          }
+
+          chapLi.appendChild(chapNested);
+          nested.appendChild(chapLi);
+        });
+      } else {
+        if (part.articles.length === 0) {
+          const omitted = document.createElement('li');
+          omitted.textContent = 'Omitted';
+          nested.appendChild(omitted);
+        } else {
+          part.articles.forEach(article => {
+            const artLi = document.createElement('li');
+            artLi.classList.add('article');
+
+            const label = /^\d/.test(article.id) ? `Article ${article.id}` : article.id;
+            const display = article.title ? `${label}: ${article.title}` : label;
+
+            const link = document.createElement('span');
+            link.classList.add('link');
+            link.textContent = display;
+            link.onclick = () => goToArticle(part.part, article.id);
+
+            artLi.appendChild(link);
+            nested.appendChild(artLi);
+          });
+        }
+      }
+
+      li.appendChild(nested);
+      partsList.appendChild(li);
+    });
+  }
+
+  function goToArticle(part, article) {
+    const partSlug = encodeURIComponent(part);
+    const articleSlug = encodeURIComponent(article);
+    window.location.href = `article.html?part=${partSlug}&article=${articleSlug}`;
+  }
+
+  async function loadParts() {
+    const response = await fetch('./data/parts.json');
+    const parts = await response.json();
+    renderItems(parts);
+  }
+
+  window.addEventListener('load', loadParts);
+</script>
+
+<script>
+  // Function to handle the hiding of article titles based on checkbox state
+function toggleArticleTitles() {
+  const isChecked = document.getElementById('hide-titles').checked;
+  const articleSpans = document.querySelectorAll('.article .link');
+
+  articleSpans.forEach(span => {
+    const fullText = span.textContent;
+    const splitText = fullText.split(':');
+    
+    if (splitText.length > 1) {
+      // Create separate spans for the article number and title
+      const articleNumber = splitText[0].trim();
+      const articleTitle = splitText[1].trim();
+      
+      // Ensure the span only contains the article number initially
+      if (!span.hasAttribute('data-article-number')) {
+        const articleNumberSpan = document.createElement('span');
+        articleNumberSpan.classList.add('article-number');
+        articleNumberSpan.textContent = articleNumber;
+        span.innerHTML = '';  // Clear previous content
+        span.appendChild(articleNumberSpan);
+
+        const articleTitleSpan = document.createElement('span');
+        articleTitleSpan.classList.add('article-title');
+        articleTitleSpan.textContent = `: ${articleTitle}`;
+        span.appendChild(articleTitleSpan);
+      }
+
+      // Toggle opacity based on the checkbox state
+      const articleTitleSpan = span.querySelector('.article-title');
+      if (isChecked) {
+        articleTitleSpan.style.opacity = '0';
+      } else {
+        articleTitleSpan.style.opacity = '1';
+      }
+    }
+  });
+}
+
+</script>
+
+
+
+
+
+
+
+<style> 
+   
+   .right-align-container {
+  text-align: right;
+  margin: 0.2rem 0;
+  opacity: 0.5;
+}
+
+html{   display: grid;
+    place-items: center;}
+
+  body {  
+   font-family: sans-serif; 
+   background-color: #f4f5f7; margin: 0; padding: 2rem;}
+
+
+#content-wrapper {width: 810px; padding: 10px; background-color: rgba(255, 255, 255, 1);}
+  
+.content { max-width: 810px; margin: 0 auto; background-color: #ffffff; padding: 2rem; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); } 
+
+  
+  .part {
+    color: rgb(65, 65, 65);
+  }
+
+  .part:hover {
+    color: rgb(0, 0, 0);
+  }
+  
+  .chapter {
+   color: rgb(107, 107, 107);
+    font-style: italic;
+  }
+
+  .chapter:hover{
+   color: rgb(46, 46, 46);
+  }
+
+
+  
+  .heading, .article {
+    color: #919090;
+    font-style: italic;
+  }
+
+  .heading:hover {
+    color: rgb(98, 97, 97);
+  }
+  
+  
+  h1 { font:unset; font-size: 1.5rem; font-style: unset !important; text-align: center; margin-top: -0.5rem; margin-bottom: 1.15rem; color: #2c3e50; } 
+  ul { list-style: none; padding-left: 0; } li { margin: 0.3rem 0; padding-left: 1.2rem; position: relative; } 
+  .nested { display: none; margin-left: 1.25rem; border-left: 2px solid #e0e0e0; padding-left: 0.75rem; } 
+  li.collapsible.open > .nested { display: block; } .link { color: #2c3e50; text-decoration: none; } 
+  .link:hover { text-decoration: underline; } </style>
+
+</body>
+</html>

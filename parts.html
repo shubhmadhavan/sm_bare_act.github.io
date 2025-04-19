@@ -1,0 +1,88 @@
+<!-- parts.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Part View</title>
+  <style>
+    body { font-family: sans-serif; padding: 1rem; }
+    h1, h2, h3 { margin-top: 1rem; }
+    ul { list-style: none; padding-left: 1rem; }
+    .link { color: blue; cursor: pointer; text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <a href="index.html">← Back to Index</a>
+  <h1 id="part-title">Loading...</h1>
+  <div id="content"></div>
+
+  <script>
+    function getParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    async function loadPart() {
+      const partName = getParam('part');
+      const partTitleElem = document.getElementById('part-title');
+      const contentElem = document.getElementById('content');
+
+      const res = await fetch('./data/parts.json');
+      const parts = await res.json();
+      const part = parts.find(p => p.part === partName);
+
+      if (!part) {
+        partTitleElem.textContent = 'Part not found';
+        return;
+      }
+
+      partTitleElem.textContent = `${part.part} — ${part.title}`;
+
+      if (part.chapters.length > 0) {
+        part.chapters.forEach(ch => {
+          const chElem = document.createElement('div');
+          chElem.innerHTML = `<h2>${ch.chapter}</h2>`;
+
+          if (ch.headings?.length > 0) {
+            ch.headings.forEach(heading => {
+              const hElem = document.createElement('div');
+              hElem.innerHTML = `<h3>${heading.heading}</h3><ul>${heading.articles.map(a => `<li><span class="link" onclick="goToArticle('${part.part}', '${a}')">Article ${a}</span></li>`).join('')}</ul>`;
+              chElem.appendChild(hElem);
+            });
+          } else {
+            const list = document.createElement('ul');
+            ch.articles.forEach(a => {
+              const item = document.createElement('li');
+              item.innerHTML = `<span class="link" onclick="goToArticle('${part.part}', '${a}')">Article ${a}</span>`;
+              list.appendChild(item);
+            });
+            chElem.appendChild(list);
+          }
+
+          contentElem.appendChild(chElem);
+        });
+      } else {
+        if (part.articles.length > 0) {
+          const list = document.createElement('ul');
+          part.articles.forEach(a => {
+            const item = document.createElement('li');
+            item.innerHTML = `<span class="link" onclick="goToArticle('${part.part}', '${a}')">Article ${a}</span>`;
+            list.appendChild(item);
+          });
+          contentElem.appendChild(list);
+        } else {
+          contentElem.textContent = 'No articles in this part.';
+        }
+      }
+    }
+
+    function goToArticle(part, article) {
+      const p = encodeURIComponent(part);
+      const a = encodeURIComponent(article);
+      window.location.href = `article.html?part=${p}&article=${a}`;
+    }
+
+    loadPart();
+  </script>
+</body>
+</html>
