@@ -53,11 +53,6 @@ h2 {font:unset; font-size: 0.96rem; font-style:italic; color:rgba(80,80,80,0.66)
 
 .section-summary , .section-amendments {color:rgba(80,80,80,0.5);}
 
-sup{
-font-size: 0.6rem; 
-vertical-align: super;
-color:rgba(80,80,80,0.5);
-}
 
 .back2index{font-size: 1rem; opacity:0.4;}
 
@@ -108,25 +103,24 @@ hr{opacity:0.2;}
 
 
     .navigation-buttons {
-        flex-direction: row;
-        justify-content: space-around;
-        margin: 32rem 0 -0.1rem -8.45rem; /* top margin only */
-        padding: 0.7rem;
         position: fixed;
-        width: 40.98rem;
-        z-index:9999 !important;
-        opacity:0.35;
-
+        bottom: -8rem; 
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 3rem; /* spacing from screen edges */
+        z-index: 9999 !important;
+        opacity: 0.35;
     }
-
+    
     .navigation-button {
         font-size: 1.4rem;
         padding: 18px 44px;
-        width: auto;
         border-radius: 5px;
     }
-
-
+    
 
 
 }

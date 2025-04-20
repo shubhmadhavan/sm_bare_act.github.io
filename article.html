@@ -8,7 +8,6 @@
   <title>Article</title>
   <link rel="stylesheet" href="article_styles.css">
 
-
 </head>
 
 <div id="article-info" >
@@ -54,10 +53,22 @@
         const container = document.getElementById('article-container');
         
         // Start with the basic article structure
-        let articleContent = `
-          <div class="section"><h1>Article ${data.number}: ${data.title}</h1><p>${data.text}</p></div><hr>
-        `;
         
+        let articleContent = '<div class="section">';
+
+        // Only add the heading if there's a number (and optionally title)
+        if (data.number) {
+          const titleText = data.title ? `: ${data.title}` : '';
+          articleContent += `<h1>Article ${data.number}${titleText}</h1>`;
+        }
+
+        data.text = data.text.replace(/([\[\]])/g, '<span class="bracket">$1</span>');
+        // changes color of bracket class
+
+
+        // Always add the main text
+        articleContent += `<p>${data.text}</p></div><hr>`;
+
         
         // Only add summary if it's not empty
         if (data.summary) {
@@ -74,7 +85,7 @@
           articleContent += `
             <div class="section-amendments">
               <h2>Major Amendments</h2>
-              <ul>${validAmendments.map(a => `<li>${a.year}: ${a.description}</li>`).join('')}</ul>
+              <ul>${validAmendments.map(a => `<li><u>${a.year}</u>: ${a.description}</li><br>`).join('')}</ul>
             </div>
           `;
         }
@@ -91,12 +102,6 @@
   </script>
   
  
-
-
-
-
-
-
 
 
 
@@ -200,6 +205,13 @@
   }
 </script>
 
+
+
+<style> 
+sup{  font-size: 0.6rem;   vertical-align: super;  color:rgba(80,80,80,0.6);} 
+.bracket {  color: rgba(80, 80, 80, 0.6) !important;}
+
+</style>
 
 </body>
 </html>
