@@ -62,7 +62,7 @@ h2 {font:unset; font-size: 0.96rem; font-style:italic; color:rgba(80,80,80,0.66)
 padding: 0.5rem;  font-size: 0.95rem; color: rgba(75, 75, 75,0.7); margin-top: -1.20rem; border-bottom: 1px solid #ccc; 
 }
 
-hr{opacity:0.2;}
+hr{color: rgba(215, 215, 215,0.3); }
 
 
 
