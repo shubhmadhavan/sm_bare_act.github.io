@@ -84,7 +84,7 @@
         if (validAmendments.length > 0) {
           articleContent += `
             <div class="section-amendments">
-              <h2>Major Amendments</h2>
+              <h2>Major Amendments:</h2>
               <ul>${validAmendments.map(a => `<li><u>${a.year}</u>: ${a.description}</li><br>`).join('')}</ul>
             </div>
           `;
