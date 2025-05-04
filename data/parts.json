@@ -15,7 +15,7 @@
     "articles": [
       { "id": "1", "title": "Name and territory of the Union." },
       { "id": "2", "title": "Admission or establishment of new States." },
-      { "id": "2A", "title": "(Omitted)" },
+      { "id": "2A", "title": "(Omitted) Sikkim to be associated with the Union" },
       { "id": "3", "title": "Formation of new States and alteration of areas." },
       { "id": "4", "title": "Laws made under articles 2 and 3..." }
     ]
@@ -93,7 +93,7 @@
         "articles": [
           { "id": "29", "title": "Protection of interests of minorities." },
           { "id": "30", "title": "Right of minorities to establish and administer educational institutions." },
-          { "id": "31", "title": "(Omitted)" }
+          { "id": "31", "title": "(Omitted) Compulsory acquisition of property." }
         ]
       },
       {
@@ -103,7 +103,7 @@
           { "id": "31A", "title": "Saving of laws providing for acquisition of estates, etc." },
           { "id": "31B", "title": "Validation of certain Acts and Regulations." },
           { "id": "31C", "title": "Saving of laws giving effect to certain directive principles." },
-          { "id": "31D", "title": "(Omitted)" }
+          { "id": "31D", "title": "(Omitted) Saving of laws in respect of anti-national activities." }
         ]
       },
       {
@@ -111,7 +111,7 @@
         "headings": [],
         "articles": [
           { "id": "32", "title": "Remedies for enforcement of rights conferred by this Part." },
-          { "id": "32A", "title": "(Omitted)" },
+          { "id": "32A", "title": "(Omitted) Constitutional validity of State laws not to be considered in proceedings under article 32." },
           { "id": "33", "title": "Power of Parliament to modify the rights conferred by this Part in their application to Forces, etc." },
           { "id": "34", "title": "Restriction on rights conferred by this Part while martial law is in force in any area." },
           { "id": "35", "title": "Legislation to give effect to the provisions of this Part." }
@@ -357,6 +357,42 @@
           }
         ]
       }
+    ]
+  },
+  {
+    "part": "Part XVIII",
+    "title": "Emergency Provisions",
+    "chapters": [],
+    "headings": [],
+    "articles": [
+      { "id": "352", "title": "Proclamation of Emergency." },
+      { "id": "353", "title": "Effect of Proclamation of Emergency." },
+      { "id": "354", "title": "Application of provisions relating to distribution of revenues while a Proclamation of Emergency is in operation." },
+      { "id": "355", "title": "Duty of the Union to protect States against external aggression and internal disturbance." },
+      { "id": "356", "title": "Provisions in case of failure of constitutional machinery in States." },
+      { "id": "357", "title": "Continuance of the rights of citizenship." },
+      { "id": "358", "title": "Suspension of provisions of article 19 during emergencies." },
+      { "id": "359", "title": "Suspension of the enforcement of the rights conferred by Part III during emergencies." },
+      { "id": "359A", "title": "(Omitted) Application of this Part to the State of Punjab." },
+      { "id": "360", "title": "Provisions as to financial emergency." }
+    ]
+  },
+  {
+    "part": "Part XIX",
+    "title": "Miscellaneous",
+    "chapters": [],
+    "headings": [],
+    "articles": [
+      { "id": "361", "title": "Citizenship at the commencement of the Constitution." },
+      { "id": "361A", "title": "Rights of citizenship of certain persons who have migrated to India from Pakistan." },
+      { "id": "361B", "title": "Rights of citizenship of certain persons who have migrated to India from Pakistan." },
+      { "id": "362", "title": "Rights of citizenship of certain persons who have migrated to India from Pakistan." },
+      { "id": "363", "title": "Rights of citizenship of certain migrants to Pakistan." },
+      { "id": "364", "title": "Rights of citizenship of certain persons of Indian origin residing outside India." },
+      { "id": "365", "title": "Persons voluntarily acquiring citizenship of a foreign State not to be citizens." },
+      { "id": "366", "title": "Continuance of the rights of citizenship." },
+      { "id": "367", "title": "Parliament to regulate the right of citizenship by law." },
+      { "id": "368", "title": "Parliament to regulate the right of citizenship by law." }
     ]
   }
 ]
