@@ -62,7 +62,11 @@ padding-top: 2px;
   cursor: not-allowed;
 }
 
+strong{
 
+    font-style: italic;
+    font-weight: 1;
+}
 
 html{   display: grid;
 place-items: center;}
