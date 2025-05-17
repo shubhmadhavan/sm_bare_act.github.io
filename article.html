@@ -15,6 +15,15 @@
 </div>
 
 
+<button id="sidebar-toggle">☰</button>
+<a href="index.html" class="back2index">⌂</a>
+
+<!-- Sidebar container -->
+<div id="sidebar" class="sidebar">
+  <ul id="sidebar-list"></ul>
+</div>
+
+
 <body>
 
   <div class="navigation-buttons">
@@ -29,10 +38,6 @@
   </div>
 
 
-
-  <div class="section">
-    <a href="index.html" class="back2index">← Back to Index</a>
-  </div>
 
   <script>
     function getParam(name) {
@@ -204,6 +209,112 @@
     infoDiv.textContent = `${decodeURIComponent(part)} > ${displayText}`;
   }
 </script>
+
+<script>
+  let sidebarLoaded = false;
+
+  async function loadSidebarContent() {
+    if (sidebarLoaded) return; // Prevent reloading
+    sidebarLoaded = true;
+
+    const response = await fetch('./data/parts.json');
+    const parts = await response.json();
+    const list = document.getElementById('sidebar-list');
+    list.innerHTML = '';
+
+    parts.forEach(part => {
+      const partLi = document.createElement('li');
+      partLi.classList.add('part');
+
+      const label = document.createElement('span');
+      label.classList.add('toggle-label');
+      label.textContent = part.title ? `${part.part} - ${part.title}` : part.part;
+      partLi.appendChild(label);
+
+      const nestedUl = document.createElement('ul');
+      nestedUl.classList.add('nested');
+
+      const allArticles = [
+        ...(part.articles || []),
+        ...(part.chapters || []).flatMap(chap => [
+          ...(chap.articles || []),
+          ...(chap.headings || []).flatMap(heading => heading.articles || [])
+        ]),
+        ...(part.headings || []).flatMap(heading => heading.articles || [])
+      ];
+
+      allArticles.forEach(article => {
+        const articleLi = document.createElement('li');
+        articleLi.classList.add('article');
+
+        const span = document.createElement('span');
+        span.classList.add('link');
+        const titleText = article.title ? `: ${article.title}` : '';
+        span.textContent = `Article ${article.id}${titleText}`;
+
+        span.addEventListener('click', () => {
+          const partSlug = encodeURIComponent(part.part);
+          const articleSlug = encodeURIComponent(article.id);
+          window.location.href = `article.html?part=${partSlug}&article=${articleSlug}`;
+        });
+
+        articleLi.appendChild(span);
+        nestedUl.appendChild(articleLi);
+      });
+
+      partLi.appendChild(nestedUl);
+
+      // Restore open state
+      if (localStorage.getItem(`sidebar-part-${part.part}`) === 'open') {
+        partLi.classList.add('open');
+      }
+
+      label.addEventListener('click', () => {
+        partLi.classList.toggle('open');
+        localStorage.setItem(`sidebar-part-${part.part}`, partLi.classList.contains('open') ? 'open' : 'closed');
+      });
+
+      list.appendChild(partLi);
+    });
+
+    // Restore scroll position
+    const sidebar = document.getElementById('sidebar');
+    const scrollTop = localStorage.getItem('sidebar-scroll');
+    if (scrollTop) sidebar.scrollTop = parseInt(scrollTop, 10);
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    loadSidebarContent();
+
+    // Restore sidebar open state
+    const sidebar = document.getElementById('sidebar');
+    if (localStorage.getItem('sidebar-open') === 'true') {
+      sidebar.style.transform = 'translateX(0%)';
+    }
+
+    // Save scroll position on unload
+    sidebar.addEventListener('scroll', () => {
+      localStorage.setItem('sidebar-scroll', sidebar.scrollTop);
+    });
+  });
+
+  document.getElementById('sidebar-toggle').addEventListener('click', () => {
+    const sidebar = document.getElementById('sidebar');
+
+    const isOpen = sidebar.style.transform === 'translateX(0%)';
+    sidebar.style.transform = isOpen ? 'translateX(-100%)' : 'translateX(0%)';
+
+    // Persist open/closed state
+    localStorage.setItem('sidebar-open', !isOpen);
+
+    // Load sidebar only when first opened
+    if (!sidebarLoaded && !isOpen) {
+      loadSidebarContent();
+    }
+  });
+</script>
+
+
 
 
 
