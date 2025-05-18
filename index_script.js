@@ -144,10 +144,10 @@ function saveItemState(type, id, isOpen) {
     window.location.href = `article.html?part=${partSlug}&article=${articleSlug}`;
   }
 
-  async function loadParts() {
-    const response = await fetch('./data/parts.json');
-    const parts = await response.json();
-    renderItems(parts);
+
+
+  function loadParts() {
+  renderItems(partsData);
   }
 
   window.addEventListener('load', loadParts);

@@ -10,6 +10,9 @@
 
 </head>
 
+
+<script src="data/parts.js"></script>
+
 <div id="article-info" >
 
 </div>
@@ -110,10 +113,11 @@
 
 
 
- <script>
-  async function loadPartsData() {
-    const response = await fetch('./data/parts.json');
-    return await response.json();
+<script>
+  // Navigation
+  function loadPartsData() {
+    // partsData comes from data/parts.js
+    return Promise.resolve(partsData);
   }
 
   function getUrlParams() {
@@ -196,6 +200,9 @@
   window.addEventListener('DOMContentLoaded', setupNavigation);
 </script>
 
+
+
+
 <script>
   const params = new URLSearchParams(window.location.search);
   const part = params.get("part");
@@ -210,15 +217,16 @@
   }
 </script>
 
-<script>
+
+
+<script> // SIDEBAR
   let sidebarLoaded = false;
 
-  async function loadSidebarContent() {
-    if (sidebarLoaded) return; // Prevent reloading
+  function loadSidebarContent() {
+    if (sidebarLoaded) return;
     sidebarLoaded = true;
 
-    const response = await fetch('./data/parts.json');
-    const parts = await response.json();
+    const parts = partsData; // from data/parts.js
     const list = document.getElementById('sidebar-list');
     list.innerHTML = '';
 
@@ -264,7 +272,6 @@
 
       partLi.appendChild(nestedUl);
 
-      // Restore open state
       if (localStorage.getItem(`sidebar-part-${part.part}`) === 'open') {
         partLi.classList.add('open');
       }
@@ -277,7 +284,6 @@
       list.appendChild(partLi);
     });
 
-    // Restore scroll position
     const sidebar = document.getElementById('sidebar');
     const scrollTop = localStorage.getItem('sidebar-scroll');
     if (scrollTop) sidebar.scrollTop = parseInt(scrollTop, 10);
@@ -286,13 +292,11 @@
   window.addEventListener('DOMContentLoaded', () => {
     loadSidebarContent();
 
-    // Restore sidebar open state
     const sidebar = document.getElementById('sidebar');
     if (localStorage.getItem('sidebar-open') === 'true') {
       sidebar.style.transform = 'translateX(0%)';
     }
 
-    // Save scroll position on unload
     sidebar.addEventListener('scroll', () => {
       localStorage.setItem('sidebar-scroll', sidebar.scrollTop);
     });
@@ -304,15 +308,14 @@
     const isOpen = sidebar.style.transform === 'translateX(0%)';
     sidebar.style.transform = isOpen ? 'translateX(-100%)' : 'translateX(0%)';
 
-    // Persist open/closed state
     localStorage.setItem('sidebar-open', !isOpen);
 
-    // Load sidebar only when first opened
     if (!sidebarLoaded && !isOpen) {
       loadSidebarContent();
     }
   });
 </script>
+
 
 
 

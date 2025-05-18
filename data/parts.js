@@ -1,4 +1,4 @@
-[
+const partsData = [
   {
     "part": "Preamble",
     "title": "",
@@ -167,7 +167,7 @@
             "articles": [
               { "id": "52", "title": "The President of India." },
               { "id": "53", "title": "." },
-              { "id": "54", "title": "." },
+              { "id": "54", "title": "Election of President." },
               { "id": "55", "title": "." },
               { "id": "56", "title": "." },
               { "id": "57", "title": "." },
