@@ -190,10 +190,19 @@ hr{color: rgba(215, 215, 215,0.3); }
 
 
 
+
+
+
+
+
 @media only screen and (max-width: 829px) {
 
+.back2index, #sidebar-toggle {top: -2px !important;}
+
+.container-wrapper{}
+
     #article-container {
-        width: 95vw;
+        width: 94vw;
         margin-top: 0;
         padding: 10px 15px;
        
@@ -217,10 +226,10 @@ hr{color: rgba(215, 215, 215,0.3); }
 
     body, html {
         padding: 1rem;
-        overflow-x: hidden !important;
         margin-top: -1.6rem;;
     }
    
+ 
 
 
     .navigation-buttons {
@@ -235,26 +244,14 @@ hr{color: rgba(215, 215, 215,0.3); }
         z-index: 9999 !important;
         opacity: 0.35;
     }
-    
-    .navigation-button {
-        font-size: 1.4rem;
-        padding: 18px 44px;
-        border-radius: 5px;
-    }
-    
-    .back2index {
-        left: 0;
-        right: 0;
-        margin-left: auto;
-        margin-right: auto;
-        width: fit-content; 
-        }
+  
+
 
 }
 
 
 
-    @media only screen and (max-width: 1379px){   /* ipad media below */
+@media only screen and (max-width: 1379px){   /* ipad media below */
 
         body, html {
             max-width: 100vw !important;
