@@ -10,6 +10,36 @@
 
 </head>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Basic phone detection (viewport width under 830px)
+    const isPhone = window.innerWidth <= 830;
+
+    if (isPhone) {
+      const article = document.getElementById('article-container');
+      const sidebar = document.getElementById('sidebar');
+
+      if (article && sidebar) {
+        article.addEventListener('click', function () {
+          sidebar.style.transform = 'translateX(-100%)';
+        });
+      }
+    }
+  });
+</script>
+
+
+<script>
+  document.addEventListener('gesturestart', function (e) {
+    e.preventDefault();
+  });
+  document.addEventListener('gesturechange', function (e) {
+    e.preventDefault();
+  });
+  document.addEventListener('gestureend', function (e) {
+    e.preventDefault();
+  });
+</script>
 
 <script src="data/parts.js"></script>
 
